@@ -127,7 +127,7 @@ if st.button("診断スタート", type="primary", disabled=not is_valid):
         .style.background_gradient(
             subset=['不満度スコア'],
             cmap='RdYlGn_r'
-        )
+        ),
         hide_index=True  
     )
 elif not is_valid:
