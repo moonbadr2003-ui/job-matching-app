@@ -124,7 +124,9 @@ if st.button("診断スタート", type="primary", disabled=not is_valid):
     display_cols = ['順位', '企業名', '不満度スコア'] + labels
     st.dataframe(
         ranking[display_cols]
-        .style.background_gradient(
+        .style
+        .hide(axis"index")
+        .background_gradient(
             subset=['不満度スコア'],
             cmap='RdYlGn_r'
         )
