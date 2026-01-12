@@ -82,7 +82,7 @@ else:
 if st.button("診断スタート", type="primary", disabled=not is_valid):
     df_companies = load_data()
     ranking = calculate_penalty_ranking(df_companies, user_inputs)
-    ranking.insert(0, "順位", ranking.index + 1)
+    ranking.insert(1, "順位", ranking.index + 1)
 
     best_company = ranking.iloc[0]
 
@@ -124,9 +124,7 @@ if st.button("診断スタート", type="primary", disabled=not is_valid):
     display_cols = ['順位', '企業名', '不満度スコア'] + labels
     st.dataframe(
         ranking[display_cols]
-        .style
-        .hide(axis"index")
-        .background_gradient(
+        .style.background_gradient(
             subset=['不満度スコア'],
             cmap='RdYlGn_r'
         )
