@@ -123,12 +123,14 @@ if st.button("診断スタート", type="primary", disabled=not is_valid):
     st.subheader("📊 企業ランキング")
     display_cols = ['順位', '企業名', '不満度スコア'] + labels
     st.dataframe(
-        ranking[display_cols]
-        .style.background_gradient(
-            subset=['不満度スコア'],
-            cmap='RdYlGn_r'
-        )
+    ranking[display_cols]
+    .style
+    .hide(axis="index")
+    .background_gradient(
+        subset=['不満度スコア'],
+        cmap='RdYlGn_r'
     )
+)
 
 elif not is_valid:
     st.warning(
@@ -138,3 +140,4 @@ else:
     st.info(
         "左のメニューで条件を設定し、「診断スタート」を押すことで分析が開始される。"
     )
+
