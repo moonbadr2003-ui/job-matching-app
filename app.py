@@ -9,7 +9,6 @@ def load_data():
     # Excelファイルから企業スコアを読み込む
     df = pd.read_excel("score_all.xlsx")
     return df
-
 # =========================================================
 # 2. 計算アルゴリズム（片側ペナルティ方式）
 # =========================================================
@@ -83,6 +82,7 @@ else:
 if st.button("診断スタート", type="primary", disabled=not is_valid):
     df_companies = load_data()
     ranking = calculate_penalty_ranking(df_companies, user_inputs)
+    ranking.insert(0, "順位", ranking.index + 1)
 
     best_company = ranking.iloc[0]
 
@@ -121,7 +121,7 @@ if st.button("診断スタート", type="primary", disabled=not is_valid):
     st.divider()
 
     st.subheader("📊 企業ランキング")
-    display_cols = ['企業名', '不満度スコア'] + labels
+    display_cols = ['順位', '企業名', '不満度スコア'] + labels
     st.dataframe(
         ranking[display_cols]
         .style.background_gradient(
@@ -138,4 +138,3 @@ else:
     st.info(
         "左のメニューで条件を設定し、「診断スタート」を押すことで分析が開始される。"
     )
-
