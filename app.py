@@ -14,16 +14,16 @@ def load_data():
 # =========================================================
 def calculate_penalty_ranking(df, user_inputs):
     df_result = df.copy()
-    df_result['不満度スコア'] = 0.0
+    df_result['ミスマッチ度スコア'] = 0.0
 
     for label, user_point in user_inputs.items():
         target_val = user_point / 5.0
         actual_val = df_result[label]
         gap = np.maximum(0, target_val - actual_val)
-        df_result['不満度スコア'] += gap ** 2
+        df_result['ミスマッチ度スコア'] += gap ** 2
 
     df_sorted = df_result.sort_values(
-        '不満度スコア', ascending=True
+        'ミスマッチ度スコア', ascending=True
     ).reset_index(drop=True)
 
     return df_sorted
@@ -93,7 +93,7 @@ if st.button("診断スタート", type="primary", disabled=not is_valid):
     with col1:
         st.header(f"🏆 第1位：{best_company['企業名']}")
         st.caption(
-            f"不満度スコア：{best_company['不満度スコア']:.4f} "
+            f"ミスマッチ度スコア：{best_company['ミスマッチ度スコア']:.4f} "
             "(0に近いほど理想)"
         )
 
@@ -121,11 +121,11 @@ if st.button("診断スタート", type="primary", disabled=not is_valid):
     st.divider()
 
     st.subheader("📊 企業ランキング")
-    display_cols = ['順位', '企業名', '不満度スコア'] + labels
+    display_cols = ['順位', '企業名', 'ミスマッチ度スコア'] + labels
     st.dataframe(
         ranking[display_cols]
         .style.background_gradient(
-            subset=['不満度スコア'],
+            subset=['ミスマッチ度スコア'],
             cmap='RdYlGn_r'
         ),
         hide_index=True  
